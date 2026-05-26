@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="SauceDemo_Suite" verbose="1" parallel="methods" thread-count="3">
+
+    <listeners>
+        <listener class-name="com.automation.utils.ExtentReportListener"/>
+    </listeners>
+
+    <!-- Quick sanity check — runs before every deployment -->
+    <test name="Smoke">
+        <groups>
+            <run><include name="smoke"/></run>
+        </groups>
+        <classes>
+            <class name="com.automation.tests.LoginTest"/>
+            <class name="com.automation.tests.HomePageTest"/>
+        </classes>
+    </test>
+
+    <!-- Full regression — runs on every push to main -->
+    <test name="Regression">
+        <classes>
+            <class name="com.automation.tests.LoginTest"/>
+            <class name="com.automation.tests.HomePageTest"/>
+            <class name="com.automation.tests.ProductTest"/>
+            <class name="com.automation.tests.CheckoutTest"/>
+        </classes>
+    </test>
+
+</suite>
