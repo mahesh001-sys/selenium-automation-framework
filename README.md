@@ -9,7 +9,6 @@ Built with Selenium WebDriver · Java 11 · TestNG · Maven · Page Object Model
 [![Selenium](https://img.shields.io/badge/Selenium-4.18.1-43B02A?logo=selenium&logoColor=white)](https://www.selenium.dev/)
 [![TestNG](https://img.shields.io/badge/TestNG-7.9.0-red)](https://testng.org/)
 [![Maven](https://img.shields.io/badge/Maven-3.x-C71A36?logo=apachemaven&logoColor=white)](https://maven.apache.org/)
-[![License](https://img.shields.io/badge/License-MIT-lightgrey)](LICENSE)
 [![GitHub last commit](https://img.shields.io/github/last-commit/mahesh001-sys/selenium-automation-framework)](https://github.com/mahesh001-sys/selenium-automation-framework/commits/main)
 
 </div>
@@ -85,17 +84,16 @@ selenium-automation-framework/
 
 ## Tech stack
 
-| Tool | Version | Why it's here |
-|------|---------|---------------|
-| Selenium WebDriver | 4.18.1 | Browser automation |
-| Java | 11 | Core language |
-| TestNG | 7.9.0 | Test runner, grouping, parallel execution |
-| Maven | 3.x | Build and dependency management |
-| WebDriverManager | 5.7.0 | Auto-downloads the right chromedriver/geckodriver |
-| ExtentReports | 5.1.1 | HTML report with screenshots |
-| Apache POI | 5.2.5 | Read test data from Excel sheets |
-| Log4j2 | 2.23.1 | Logging to console and rolling file |
-| Commons IO | 2.15.1 | File utilities for screenshot saving |
+| Tool | Why it's here |
+|------|---------------|
+| Selenium WebDriver | Browser automation |
+| Java | Core language |
+| TestNG | Test runner, grouping, parallel execution |
+| Maven | Build and dependency management |
+| WebDriverManager | Auto-downloads the right chromedriver/geckodriver |
+| ExtentReports | HTML report with screenshots |
+| Apache POI | Read test data from Excel sheets |
+| Commons IO | File utilities for screenshot saving |
 
 ---
 
@@ -261,6 +259,3 @@ B.Tech Information Technology — Anurag University, Hyderabad (2022–2026)
 
 ---
 
-## License
-
-MIT — see [LICENSE](LICENSE) for details.
