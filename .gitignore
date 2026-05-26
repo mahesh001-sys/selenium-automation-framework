@@ -1,0 +1,21 @@
+# Maven
+target/
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Reports (generated at runtime)
+reports/ExtentReport.html
+reports/screenshots/
+reports/logs/
+
+# Keep reports folder
+!reports/.gitkeep
+!reports/test-execution-output.txt
+
+# OS
+.DS_Store
+Thumbs.db

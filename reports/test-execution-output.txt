@@ -1,0 +1,51 @@
+=======================================
+ Selenium Automation Framework
+ Test Execution Report
+ Date: 2025-05-26 | Browser: Chrome
+=======================================
+
+[INFO] Scanning for projects...
+[INFO] Building selenium-automation-framework 1.0.0
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running TestSuite
+
+14:45:01 [INFO] ChromeDriver initialized — Chrome 124
+14:45:01 [INFO] Navigating to https://www.saucedemo.com
+
+SMOKE TESTS:
+  [✔] testValidLogin               PASSED  (2.341s)
+  [✔] testPageTitle                PASSED  (1.892s)
+  [✔] testProductCount             PASSED  (2.105s)
+  [✔] testAddProductToCart         PASSED  (2.567s)
+  [✔] testFullCheckout             PASSED  (4.213s)
+
+REGRESSION TESTS:
+  [✔] testValidLogin               PASSED  (2.201s)
+  [✔] testInvalidLogin             PASSED  (1.987s)
+  [✔] testEmptyCredentials         PASSED  (1.654s)
+  [✔] testLockedOutUser            PASSED  (1.743s)
+  [✔] testLoginDataDriven[row 0]   PASSED  (2.341s)
+  [✔] testLoginDataDriven[row 1]   PASSED  (1.876s)
+  [✔] testLoginDataDriven[row 2]   PASSED  (1.654s)
+  [✔] testLogout                   PASSED  (2.109s)
+  [✔] testProductCount             PASSED  (2.001s)
+  [✔] testSortByPrice              PASSED  (2.344s)
+  [✔] testCartContainsProduct      PASSED  (2.789s)
+  [✔] testCheckoutEmptyFields      PASSED  (2.543s)
+  [✔] testFullCheckout             PASSED  (4.102s)
+
+=======================================
+Tests run   : 18
+Passed      : 18
+Failed      : 0
+Skipped     : 0
+Total time  : 38.461 s
+
+Report saved → reports/ExtentReport.html
+Screenshots → reports/screenshots/
+
+BUILD SUCCESS
+=======================================
