@@ -15,7 +15,8 @@ import java.util.List;
  */
 public class ExcelUtils {
 
-    private ExcelUtils() {}
+    private ExcelUtils() {
+    }
 
     /**
      * Reads all rows from a sheet and returns them as a 2D Object array
@@ -26,45 +27,62 @@ public class ExcelUtils {
      * @return Object[][] where each row is one test data set
      */
     public static Object[][] readSheet(String filePath, String sheetName) {
+
         List<Object[]> data = new ArrayList<>();
 
         try (FileInputStream fis = new FileInputStream(filePath);
-             Workbook workbook   = new XSSFWorkbook(fis)) {
+             Workbook workbook = new XSSFWorkbook(fis)) {
 
-            Sheet sheet     = workbook.getSheet(sheetName);
-            int   totalRows = sheet.getLastRowNum();          // excludes header (row 0)
-            int   totalCols = sheet.getRow(0).getLastCellNum();
+            Sheet sheet = workbook.getSheet(sheetName);
+
+            int totalRows = sheet.getLastRowNum();
+            int totalCols = sheet.getRow(0).getLastCellNum();
 
             for (int r = 1; r <= totalRows; r++) {
+
                 Row row = sheet.getRow(r);
-                if (row == null) continue;
+
+                if (row == null) {
+                    continue;
+                }
 
                 Object[] rowData = new Object[totalCols];
+
                 for (int c = 0; c < totalCols; c++) {
+
                     Cell cell = row.getCell(c);
+
                     rowData[c] = cell == null ? "" : getCellValue(cell);
                 }
+
                 data.add(rowData);
             }
+
         } catch (IOException e) {
-            throw new RuntimeException("Cannot read Excel file: " + filePath, e);
+            throw new RuntimeException(
+                    "Cannot read Excel file: " + filePath, e);
         }
 
         return data.toArray(new Object[0][]);
     }
+
     private static String getCellValue(Cell cell) {
-    switch (cell.getCellType()) {
-        case STRING:
-            return cell.getStringCellValue().trim();
 
-        case NUMERIC:
-            return String.valueOf((long) cell.getNumericCellValue());
+        switch (cell.getCellType()) {
 
-        case BOOLEAN:
-            return String.valueOf(cell.getBooleanCellValue());
+            case STRING:
+                return cell.getStringCellValue().trim();
 
-        default:
-            return "";
+            case NUMERIC:
+                return String.valueOf(
+                        (long) cell.getNumericCellValue());
+
+            case BOOLEAN:
+                return String.valueOf(
+                        cell.getBooleanCellValue());
+
+            default:
+                return "";
+        }
     }
 }
-    
