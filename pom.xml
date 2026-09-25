@@ -28,15 +28,14 @@
         </developer>
     </developers>
 
-
     <!-- ============================= -->
     <!-- Project Properties -->
     <!-- ============================= -->
 
     <properties>
 
-        <!-- Java -->
-        <java.version>17</java.version>
+        <!-- Java 11 -->
+        <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -64,7 +63,6 @@
 
     </properties>
 
-
     <!-- ============================= -->
     <!-- Dependencies -->
     <!-- ============================= -->
@@ -78,7 +76,6 @@
             <version>${selenium.version}</version>
         </dependency>
 
-
         <!-- TestNG -->
         <dependency>
             <groupId>org.testng</groupId>
@@ -87,14 +84,12 @@
             <scope>test</scope>
         </dependency>
 
-
         <!-- WebDriverManager -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>${webdrivermanager.version}</version>
         </dependency>
-
 
         <!-- Extent Reports -->
         <dependency>
@@ -103,7 +98,6 @@
             <version>${extentreports.version}</version>
         </dependency>
 
-
         <!-- Apache POI - Excel -->
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -111,14 +105,12 @@
             <version>${poi.version}</version>
         </dependency>
 
-
         <!-- Commons IO -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
-
 
         <!-- Log4j2 -->
         <dependency>
@@ -134,7 +126,6 @@
         </dependency>
 
     </dependencies>
-
 
     <!-- ============================= -->
     <!-- Build Configuration -->
@@ -156,7 +147,6 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
-
 
             <!-- Maven Surefire Plugin -->
             <plugin>
