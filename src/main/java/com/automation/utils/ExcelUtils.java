@@ -52,13 +52,19 @@ public class ExcelUtils {
 
         return data.toArray(new Object[0][]);
     }
-
     private static String getCellValue(Cell cell) {
-        return switch (cell.getCellType()) {
-            case STRING  -> cell.getStringCellValue().trim();
-            case NUMERIC -> String.valueOf((long) cell.getNumericCellValue());
-            case BOOLEAN -> String.valueOf(cell.getBooleanCellValue());
-            default      -> "";
-        };
+    switch (cell.getCellType()) {
+        case STRING:
+            return cell.getStringCellValue().trim();
+
+        case NUMERIC:
+            return String.valueOf((long) cell.getNumericCellValue());
+
+        case BOOLEAN:
+            return String.valueOf(cell.getBooleanCellValue());
+
+        default:
+            return "";
     }
 }
+    
