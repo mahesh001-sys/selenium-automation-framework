@@ -35,6 +35,7 @@ release.properties
 reports/*
 !reports/.gitkeep
 !reports/test-execution-output.txt
+
 test-output/
 surefire-reports/
 failsafe-reports/
