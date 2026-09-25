@@ -30,33 +30,26 @@ public class CheckoutPage extends BasePage {
     @FindBy(className = "complete-header")
     private WebElement confirmationMessage;
 
-
-    public CheckoutPage enterFirstName(
-            String firstName) {
+    public CheckoutPage enterFirstName(String firstName) {
 
         type(firstNameField, firstName);
 
         return this;
     }
 
-
-    public CheckoutPage enterLastName(
-            String lastName) {
+    public CheckoutPage enterLastName(String lastName) {
 
         type(lastNameField, lastName);
 
         return this;
     }
 
-
-    public CheckoutPage enterPostalCode(
-            String postalCode) {
+    public CheckoutPage enterPostalCode(String postalCode) {
 
         type(postalCodeField, postalCode);
 
         return this;
     }
-
 
     public CheckoutPage continueCheckout() {
 
@@ -65,14 +58,22 @@ public class CheckoutPage extends BasePage {
         return this;
     }
 
-
     public CheckoutPage finishCheckout() {
 
-        click(finishButton);
+        WebElement visibleFinishButton =
+                wait.waitForVisible(finishButton);
+
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].scrollIntoView({block:'center'});",
+                        visibleFinishButton
+                );
+
+        wait.waitForClickable(visibleFinishButton)
+                .click();
 
         return this;
     }
-
 
     public CheckoutPage completeCheckout(
             String firstName,
@@ -85,7 +86,6 @@ public class CheckoutPage extends BasePage {
                 .continueCheckout()
                 .finishCheckout();
     }
-
 
     public String getConfirmationMessage() {
 
