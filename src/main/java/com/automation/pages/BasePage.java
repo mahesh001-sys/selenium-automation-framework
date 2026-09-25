@@ -18,8 +18,25 @@ public abstract class BasePage {
     protected WaitUtils wait;
 
     protected BasePage() {
+
         this.driver = DriverManager.getDriver();
-        this.wait   = new WaitUtils(driver);
+
+        // Diagnostic check: verify WebDriver is available
+        if (this.driver == null) {
+            throw new RuntimeException(
+                    "DEBUG: BasePage driver is NULL"
+            );
+        }
+
+        this.wait = new WaitUtils(driver);
+
+        // Diagnostic check: verify WaitUtils was created
+        if (this.wait == null) {
+            throw new RuntimeException(
+                    "DEBUG: BasePage WaitUtils is NULL"
+            );
+        }
+
         PageFactory.initElements(driver, this);
     }
 
@@ -37,8 +54,11 @@ public abstract class BasePage {
     }
 
     protected boolean isDisplayed(WebElement element) {
-        try { return element.isDisplayed(); }
-        catch (Exception e) { return false; }
+        try {
+            return element.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public String getPageTitle() {
