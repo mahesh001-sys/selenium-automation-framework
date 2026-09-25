@@ -17,26 +17,57 @@ import org.testng.annotations.BeforeMethod;
  */
 public class BaseTest {
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setUp() {
+
+        System.out.println(
+                "===== BaseTest.setUp() EXECUTED ====="
+        );
+
+        System.out.println(
+                "===== Initializing WebDriver ====="
+        );
 
         DriverManager.initDriver();
 
         if (DriverManager.getDriver() == null) {
+
             throw new IllegalStateException(
                     "WebDriver initialization failed."
             );
         }
 
-        DriverManager.getDriver().get(
+        System.out.println(
+                "===== WebDriver initialized successfully ====="
+        );
+
+        String baseUrl =
                 ConfigReader.getInstance()
-                        .getBaseUrl()
+                        .getBaseUrl();
+
+        System.out.println(
+                "===== Opening URL: " + baseUrl + " ====="
+        );
+
+        DriverManager.getDriver().get(baseUrl);
+
+        System.out.println(
+                "===== BaseTest.setUp() COMPLETED ====="
         );
     }
+
 
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
 
+        System.out.println(
+                "===== BaseTest.tearDown() EXECUTED ====="
+        );
+
         DriverManager.quitDriver();
+
+        System.out.println(
+                "===== WebDriver closed ====="
+        );
     }
 }
