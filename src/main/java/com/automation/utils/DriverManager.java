@@ -14,6 +14,8 @@ import org.openqa.selenium.firefox.FirefoxOptions;
  * Thread-safe WebDriver factory using ThreadLocal.
  * Supports Chrome, Firefox, and Edge.
  *
+ * Compatible with Java 11.
+ *
  * @author Banoth Mahesh Kumar
  */
 public class DriverManager {
@@ -22,81 +24,126 @@ public class DriverManager {
             new ThreadLocal<>();
 
     private DriverManager() {
+        // Prevent object creation
     }
 
+    /**
+     * Returns the WebDriver instance for the current thread.
+     */
     public static WebDriver getDriver() {
         return driverThread.get();
     }
 
+    /**
+     * Initializes the WebDriver based on the browser
+     * and headless configuration.
+     */
     public static void initDriver() {
 
-        String browser =
-                ConfigReader.getInstance().getBrowser().toLowerCase();
+        String browser = ConfigReader.getInstance()
+                .getBrowser()
+                .toLowerCase();
 
-        boolean headless =
-                ConfigReader.getInstance().isHeadless();
+        boolean headless = ConfigReader.getInstance()
+                .isHeadless();
 
         WebDriver driver;
 
         switch (browser) {
 
             case "firefox":
+
                 WebDriverManager.firefoxdriver().setup();
 
-                FirefoxOptions ffOpts = new FirefoxOptions();
+                FirefoxOptions firefoxOptions =
+                        new FirefoxOptions();
 
                 if (headless) {
-                    ffOpts.addArguments("--headless");
+                    firefoxOptions.addArguments("--headless");
                 }
 
-                driver = new FirefoxDriver(ffOpts);
+                driver = new FirefoxDriver(firefoxOptions);
+
                 break;
+
 
             case "edge":
+
                 WebDriverManager.edgedriver().setup();
 
-                EdgeOptions edgeOpts = new EdgeOptions();
+                EdgeOptions edgeOptions =
+                        new EdgeOptions();
 
                 if (headless) {
-                    edgeOpts.addArguments(
+                    edgeOptions.addArguments(
                             "--headless",
                             "--no-sandbox",
                             "--disable-dev-shm-usage"
                     );
                 }
 
-                driver = new EdgeDriver(edgeOpts);
+                driver = new EdgeDriver(edgeOptions);
+
                 break;
 
+
+            case "chrome":
+
             default:
+
                 WebDriverManager.chromedriver().setup();
 
-                ChromeOptions opts = new ChromeOptions();
+                ChromeOptions chromeOptions =
+                        new ChromeOptions();
 
                 if (headless) {
-                    opts.addArguments(
+                    chromeOptions.addArguments(
                             "--headless",
                             "--no-sandbox",
                             "--disable-dev-shm-usage"
                     );
                 }
 
-                opts.addArguments("--start-maximized");
+                driver = new ChromeDriver(chromeOptions);
 
-                driver = new ChromeDriver(opts);
                 break;
         }
 
-        driver.manage().window().maximize();
+        /*
+         * Maximize only when running in normal mode.
+         * In headless mode, use a fixed window size.
+         */
+        if (headless) {
+
+            driver.manage()
+                    .window()
+                    .setSize(
+                            new org.openqa.selenium.Dimension(
+                                    1920,
+                                    1080
+                            )
+                    );
+
+        } else {
+
+            driver.manage()
+                    .window()
+                    .maximize();
+        }
 
         driverThread.set(driver);
     }
 
+    /**
+     * Quits the WebDriver and removes it from ThreadLocal.
+     */
     public static void quitDriver() {
 
-        if (driverThread.get() != null) {
+        WebDriver driver = driverThread.get();
 
-            driverThread.get().quit();
+        if (driver != null) {
+
+            driver.quit();
 
             driverThread.remove();
         }
