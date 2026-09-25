@@ -26,7 +26,7 @@ jobs:
         uses: browser-actions/setup-chrome@v1
 
       - name: Run Selenium Tests
-        run: mvn clean test -Dheadless=true
+        run: mvn clean test -Dheadless=true -e
 
       - name: Upload Extent Report
         if: always()
