@@ -14,8 +14,19 @@ public class BaseTest {
 
     @BeforeMethod
     public void setUp() {
+
         DriverManager.initDriver();
-        DriverManager.getDriver().get(ConfigReader.getInstance().getBaseUrl());
+
+        // Diagnostic check to verify WebDriver was created successfully
+        if (DriverManager.getDriver() == null) {
+            throw new RuntimeException(
+                    "DEBUG: WebDriver is NULL after initDriver()"
+            );
+        }
+
+        DriverManager.getDriver().get(
+                ConfigReader.getInstance().getBaseUrl()
+        );
     }
 
     @AfterMethod
