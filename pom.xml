@@ -3,109 +3,186 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.automation</groupId>
-  <artifactId>selenium-automation-framework</artifactId>
-  <version>1.0.0</version>
-  <packaging>jar</packaging>
+    <modelVersion>4.0.0</modelVersion>
 
-  <name>Selenium Automation Framework</name>
-  <description>End-to-end test automation with Selenium, Java, TestNG and POM design pattern</description>
-  <url>https://github.com/mahesh001-sys/selenium-automation-framework</url>
+    <!-- Project Information -->
+    <groupId>com.automation</groupId>
+    <artifactId>selenium-automation-framework</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
 
-  <developers>
-    <developer>
-      <id>mahesh001-sys</id>
-      <name>Banoth Mahesh Kumar</name>
-      <email>maheshbanoth057@gmail.com</email>
-    </developer>
-  </developers>
+    <name>Selenium Automation Framework</name>
+    <description>
+        End-to-end test automation framework using Selenium WebDriver,
+        Java, TestNG and Page Object Model
+    </description>
 
-  <properties>
-    <java.version>11</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <selenium.version>4.18.1</selenium.version>
-    <testng.version>7.9.0</testng.version>
-    <webdrivermanager.version>5.7.0</webdrivermanager.version>
-    <extentreports.version>5.1.1</extentreports.version>
-    <poi.version>5.2.5</poi.version>
-    <log4j.version>2.23.1</log4j.version>
-  </properties>
+    <url>https://github.com/mahesh001-sys/selenium-automation-framework</url>
 
-  <dependencies>
+    <developers>
+        <developer>
+            <id>mahesh001-sys</id>
+            <name>Banoth Mahesh Kumar</name>
+            <email>maheshbanoth057@gmail.com</email>
+        </developer>
+    </developers>
 
-    <!-- Selenium WebDriver -->
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>${selenium.version}</version>
-    </dependency>
 
-    <!-- TestNG -->
-    <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>${testng.version}</version>
-    </dependency>
+    <!-- ============================= -->
+    <!-- Project Properties -->
+    <!-- ============================= -->
 
-    <!-- WebDriverManager -->
-    <dependency>
-      <groupId>io.github.bonigarcia</groupId>
-      <artifactId>webdrivermanager</artifactId>
-      <version>${webdrivermanager.version}</version>
-    </dependency>
+    <properties>
 
-    <!-- Extent Reports -->
-    <dependency>
-      <groupId>com.aventstack</groupId>
-      <artifactId>extentreports</artifactId>
-      <version>${extentreports.version}</version>
-    </dependency>
+        <!-- Java -->
+        <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <!-- Apache POI (Excel) -->
-    <dependency>
-      <groupId>org.apache.poi</groupId>
-      <artifactId>poi-ooxml</artifactId>
-      <version>${poi.version}</version>
-    </dependency>
+        <!-- Selenium -->
+        <selenium.version>4.18.1</selenium.version>
 
-    <!-- Commons IO -->
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.15.1</version>
-    </dependency>
+        <!-- TestNG -->
+        <testng.version>7.9.0</testng.version>
 
-    <!-- Log4j2 -->
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>${log4j.version}</version>
-    </dependency>
+        <!-- WebDriverManager -->
+        <webdrivermanager.version>5.7.0</webdrivermanager.version>
 
-  </dependencies>
+        <!-- Extent Reports -->
+        <extentreports.version>5.1.1</extentreports.version>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.13.0</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.2.5</version>
-        <configuration>
-          <suiteXmlFiles>
-            <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
-          </suiteXmlFiles>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+        <!-- Apache POI -->
+        <poi.version>5.2.5</poi.version>
+
+        <!-- Log4j -->
+        <log4j.version>2.23.1</log4j.version>
+
+        <!-- Commons IO -->
+        <commons-io.version>2.15.1</commons-io.version>
+
+    </properties>
+
+
+    <!-- ============================= -->
+    <!-- Dependencies -->
+    <!-- ============================= -->
+
+    <dependencies>
+
+        <!-- Selenium WebDriver -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+
+
+        <!-- TestNG -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- WebDriverManager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+        </dependency>
+
+
+        <!-- Extent Reports -->
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>${extentreports.version}</version>
+        </dependency>
+
+
+        <!-- Apache POI - Excel -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+
+
+        <!-- Commons IO -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+
+
+        <!-- Log4j2 -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+    </dependencies>
+
+
+    <!-- ============================= -->
+    <!-- Build Configuration -->
+    <!-- ============================= -->
+
+    <build>
+
+        <plugins>
+
+            <!-- Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+
+
+            <!-- Maven Surefire Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+
+                <configuration>
+
+                    <!-- TestNG Suite -->
+                    <suiteXmlFiles>
+                        <suiteXmlFile>
+                            src/test/resources/testng.xml
+                        </suiteXmlFile>
+                    </suiteXmlFiles>
+
+                    <!-- Encoding -->
+                    <argLine>
+                        -Dfile.encoding=${project.build.sourceEncoding}
+                    </argLine>
+
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+    </build>
 
 </project>
