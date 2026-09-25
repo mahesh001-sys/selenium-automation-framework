@@ -19,34 +19,36 @@ public class CartPage extends BasePage {
     @FindBy(id = "checkout")
     private WebElement checkoutButton;
 
-
     public String getPageHeader() {
 
         return getText(pageHeader);
     }
 
-
     public boolean isProductInCart(
             String productName) {
 
         String productXpath =
-                "//div[contains(@class,'inventory_item_name')"
-                        + " and normalize-space()='"
+                "//div[contains(@class,'cart_item')]"
+                        + "[.//div[contains(@class,"
+                        + "'inventory_item_name') and "
+                        + "normalize-space()='"
                         + productName
-                        + "']";
+                        + "']]";
 
         try {
 
-            return driver.findElement(
-                    By.xpath(productXpath)
-            ).isDisplayed();
+            WebElement product =
+                    wait.waitForPresence(
+                            By.xpath(productXpath)
+                    );
+
+            return product.isDisplayed();
 
         } catch (Exception e) {
 
             return false;
         }
     }
-
 
     public CartPage removeProduct(
             String productName) {
@@ -61,19 +63,20 @@ public class CartPage extends BasePage {
                         + "//button[contains(@id,'remove')]";
 
         WebElement removeButton =
-                driver.findElement(
+                wait.waitForPresence(
                         By.xpath(removeButtonXpath)
                 );
 
-        click(removeButton);
+        wait.waitForClickable(removeButton).click();
 
         return this;
     }
 
-
     public CheckoutPage proceedToCheckout() {
 
-        click(checkoutButton);
+        wait.waitForClickable(checkoutButton).click();
+
+        wait.waitForUrl("checkout-step-one.html");
 
         return new CheckoutPage();
     }
