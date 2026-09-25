@@ -1,21 +1,40 @@
+# ==============================
 # Maven
+# ==============================
 target/
 *.class
 
+# ==============================
 # IDE
+# ==============================
 .idea/
 *.iml
 .vscode/
+.settings/
+.classpath
+.project
 
-# Reports (generated at runtime)
-reports/ExtentReport.html
-reports/screenshots/
-reports/logs/
-
-# Keep reports folder
+# ==============================
+# Generated Reports
+# ==============================
+reports/*
 !reports/.gitkeep
 !reports/test-execution-output.txt
 
+# ==============================
+# Logs
+# ==============================
+logs/
+*.log
+
+# ==============================
+# WebDriverManager Cache
+# ==============================
+.wdm/
+
+# ==============================
 # OS
+# ==============================
 .DS_Store
 Thumbs.db
+Desktop.ini
