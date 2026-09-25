@@ -6,21 +6,28 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 /**
- * Base test class — handles WebDriver lifecycle for every test method.
+ * Base test class.
+ *
+ * Handles WebDriver setup and cleanup
+ * for every TestNG test method.
+ *
+ * Compatible with Java 11.
  *
  * @author Banoth Mahesh Kumar
  */
 public class BaseTest {
 
+    /**
+     * Runs before every test method.
+     */
     @BeforeMethod
     public void setUp() {
 
         DriverManager.initDriver();
 
-        // Diagnostic check to verify WebDriver was created successfully
         if (DriverManager.getDriver() == null) {
             throw new RuntimeException(
-                    "DEBUG: WebDriver is NULL after initDriver()"
+                    "WebDriver initialization failed"
             );
         }
 
@@ -29,8 +36,12 @@ public class BaseTest {
         );
     }
 
+    /**
+     * Runs after every test method.
+     */
     @AfterMethod
     public void tearDown() {
+
         DriverManager.quitDriver();
     }
 }
