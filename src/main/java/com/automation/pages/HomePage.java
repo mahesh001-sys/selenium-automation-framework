@@ -25,12 +25,10 @@ public class HomePage extends BasePage {
     @FindBy(className = "shopping_cart_link")
     private WebElement cartLink;
 
-
     public String getPageHeader() {
 
         return getText(pageHeader);
     }
-
 
     public HomePage openMenu() {
 
@@ -38,7 +36,6 @@ public class HomePage extends BasePage {
 
         return this;
     }
-
 
     public LoginPage logout() {
 
@@ -49,14 +46,14 @@ public class HomePage extends BasePage {
         return new LoginPage();
     }
 
-
     public CartPage openCart() {
 
-        click(cartLink);
+        wait.waitForClickable(cartLink).click();
+
+        wait.waitForUrl("cart.html");
 
         return new CartPage();
     }
-
 
     public HomePage addProductToCart(
             String productName) {
@@ -71,15 +68,14 @@ public class HomePage extends BasePage {
                         + "//button[contains(@id,'add-to-cart')]";
 
         WebElement addToCartButton =
-                driver.findElement(
+                wait.waitForPresence(
                         By.xpath(productXpath)
                 );
 
-        click(addToCartButton);
+        wait.waitForClickable(addToCartButton).click();
 
         return this;
     }
-
 
     public boolean isProductDisplayed(
             String productName) {
@@ -92,9 +88,12 @@ public class HomePage extends BasePage {
 
         try {
 
-            return driver.findElement(
-                    By.xpath(productXpath)
-            ).isDisplayed();
+            WebElement product =
+                    wait.waitForPresence(
+                            By.xpath(productXpath)
+                    );
+
+            return product.isDisplayed();
 
         } catch (Exception e) {
 
