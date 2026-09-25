@@ -1,146 +1,76 @@
 package com.automation.utils;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.aventstack.extentreports.reporter.configuration.Theme;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
-import org.testng.ISuite;
-import org.testng.ISuiteListener;
+import com.automation.config.ConfigReader;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
+import java.time.Duration;
 
 /**
- * TestNG listener that automatically generates an Extent HTML report.
- * Screenshots are attached automatically when a test fails.
+ * Utility class for explicit waits.
+ *
+ * Provides reusable wait methods for Selenium WebDriver.
  *
  * Compatible with Java 11.
  *
  * @author Banoth Mahesh Kumar
  */
-public class ExtentReportListener implements ITestListener, ISuiteListener {
+public class WaitUtils {
 
-    private static ExtentReports extent;
-    private static final ThreadLocal<ExtentTest> test =
-            new ThreadLocal<ExtentTest>();
+    private final WebDriver driver;
+    private final WebDriverWait wait;
 
-    @Override
-    public void onStart(ISuite suite) {
+    public WaitUtils(WebDriver driver) {
+        this.driver = driver;
 
-        // Create reports directory if it does not exist
-        File reportsDirectory = new File("reports");
+        int timeout =
+                ConfigReader.getInstance().getTimeout();
 
-        if (!reportsDirectory.exists()) {
-            reportsDirectory.mkdirs();
-        }
-
-        ExtentSparkReporter spark =
-                new ExtentSparkReporter("reports/ExtentReport.html");
-
-        spark.config().setTheme(Theme.DARK);
-        spark.config().setDocumentTitle("Selenium Automation Report");
-        spark.config().setReportName(
-                "Test Execution Report - SauceDemo"
-        );
-
-        extent = new ExtentReports();
-
-        extent.attachReporter(spark);
-
-        extent.setSystemInfo(
-                "Tester",
-                "Banoth Mahesh Kumar"
-        );
-
-        extent.setSystemInfo(
-                "Application",
-                "SauceDemo"
-        );
-
-        extent.setSystemInfo(
-                "Environment",
-                "QA"
-        );
-    }
-
-    @Override
-    public void onFinish(ISuite suite) {
-
-        if (extent != null) {
-            extent.flush();
-        }
-    }
-
-    @Override
-    public void onTestStart(ITestResult result) {
-
-        String methodName =
-                result.getMethod().getMethodName();
-
-        String description =
-                result.getMethod().getDescription();
-
-        ExtentTest extentTest =
-                extent.createTest(methodName, description);
-
-        test.set(extentTest);
-    }
-
-    @Override
-    public void onTestSuccess(ITestResult result) {
-
-        ExtentTest extentTest = test.get();
-
-        if (extentTest != null) {
-            extentTest.log(
-                    Status.PASS,
-                    "Test Passed"
-            );
-        }
-    }
-
-    @Override
-    public void onTestFailure(ITestResult result) {
-
-        ExtentTest extentTest = test.get();
-
-        if (extentTest != null) {
-
-            extentTest.log(
-                    Status.FAIL,
-                    result.getThrowable()
-            );
-
-            String screenshot =
-                    ScreenshotUtils.capture(
-                            DriverManager.getDriver(),
-                            result.getName()
-                    );
-
-            if (screenshot != null && !screenshot.isEmpty()) {
-
-                extentTest.addScreenCaptureFromPath(
-                        screenshot,
-                        "Failure Screenshot"
+        this.wait =
+                new WebDriverWait(
+                        driver,
+                        Duration.ofSeconds(timeout)
                 );
-            }
-        }
     }
 
-    @Override
-    public void onTestSkipped(ITestResult result) {
+    public WebElement waitForVisible(WebElement element) {
+        return wait.until(
+                ExpectedConditions.visibilityOf(element)
+        );
+    }
 
-        ExtentTest extentTest = test.get();
+    public WebElement waitForClickable(WebElement element) {
+        return wait.until(
+                ExpectedConditions.elementToBeClickable(element)
+        );
+    }
 
-        if (extentTest != null) {
+    public WebElement waitForPresence(By locator) {
+        return wait.until(
+                ExpectedConditions.presenceOfElementLocated(locator)
+        );
+    }
 
-            extentTest.log(
-                    Status.SKIP,
-                    "Test Skipped: "
-                            + result.getThrowable()
-            );
-        }
+    public boolean waitForInvisibility(WebElement element) {
+        return wait.until(
+                ExpectedConditions.invisibilityOf(element)
+        );
+    }
+
+    public String waitForTitle(String title) {
+        wait.until(
+                ExpectedConditions.titleContains(title)
+        );
+
+        return driver.getTitle();
+    }
+
+    public void waitForUrl(String urlFragment) {
+        wait.until(
+                ExpectedConditions.urlContains(urlFragment)
+        );
     }
 }
