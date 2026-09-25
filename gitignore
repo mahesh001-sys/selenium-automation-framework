@@ -1,24 +1,77 @@
+# ==============================
 # Maven
+# ==============================
 target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
 
-# IDE
+# ==============================
+# IDE - IntelliJ IDEA
+# ==============================
 .idea/
 *.iml
+*.iws
+*.ipr
+
+# ==============================
+# IDE - VS Code
+# ==============================
 .vscode/
+
+# ==============================
+# IDE - Eclipse
+# ==============================
 .settings/
 .classpath
 .project
+.factorypath
 
-# Generated reports (run locally to see them)
+# ==============================
+# Test Reports & Generated Files
+# ==============================
 reports/
+test-output/
+surefire-reports/
+failsafe-reports/
 
+# ==============================
 # Logs
+# ==============================
 logs/
 *.log
 
-# OS
+# ==============================
+# Selenium / WebDriver
+# ==============================
+.wdm/
+drivers/
+
+# ==============================
+# OS Generated Files
+# ==============================
 .DS_Store
 Thumbs.db
+Desktop.ini
 
-# WebDriverManager cache
-.wdm/
+# ==============================
+# Temporary / Backup Files
+# ==============================
+*.tmp
+*.temp
+*.bak
+*~
+
+# ==============================
+# Java
+# ==============================
+*.class
+
+# ==============================
+# Local Environment / Secrets
+# ==============================
+.env
+.env.*
+!.env.example
