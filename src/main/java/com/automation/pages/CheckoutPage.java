@@ -53,7 +53,9 @@ public class CheckoutPage extends BasePage {
 
     public CheckoutPage continueCheckout() {
 
-        click(continueButton);
+        wait.waitForClickable(continueButton).click();
+
+        wait.waitForUrl("checkout-step-two.html");
 
         return this;
     }
