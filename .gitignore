@@ -1,0 +1,56 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+
+# Eclipse
+.settings/
+.classpath
+.project
+.factorypath
+
+# Test Reports
+reports/*
+!reports/.gitkeep
+
+test-output/
+surefire-reports/
+failsafe-reports/
+
+# Logs
+logs/
+*.log
+
+# Selenium WebDriver Manager
+.wdm/
+
+# Java compiled files
+*.class
+
+# OS generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*~
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
