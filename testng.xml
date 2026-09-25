@@ -7,6 +7,11 @@
        verbose="1"
        parallel="false">
 
+    <listeners>
+        <listener class-name="com.automation.utils.ExtentReportListener"/>
+    </listeners>
+
+
     <test name="Smoke Tests">
 
         <groups>
@@ -23,6 +28,7 @@
         </classes>
 
     </test>
+
 
     <test name="Regression Tests">
 
