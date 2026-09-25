@@ -5,42 +5,52 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
+
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
 
 import java.io.File;
 
 /**
  * TestNG listener that automatically generates an Extent HTML report.
+ *
  * Screenshots are attached automatically when a test fails.
  *
  * Compatible with Java 11.
  *
  * @author Banoth Mahesh Kumar
  */
-public class ExtentReportListener implements ITestListener, ISuiteListener {
+public class ExtentReportListener
+        implements ITestListener, ISuiteListener {
 
     private static ExtentReports extent;
+
     private static final ThreadLocal<ExtentTest> test =
             new ThreadLocal<ExtentTest>();
 
     @Override
     public void onStart(ISuite suite) {
 
-        // Create reports directory if it does not exist
-        File reportsDirectory = new File("reports");
+        File reportsDirectory =
+                new File("reports");
 
         if (!reportsDirectory.exists()) {
             reportsDirectory.mkdirs();
         }
 
         ExtentSparkReporter spark =
-                new ExtentSparkReporter("reports/ExtentReport.html");
+                new ExtentSparkReporter(
+                        "reports/ExtentReport.html"
+                );
 
         spark.config().setTheme(Theme.DARK);
-        spark.config().setDocumentTitle("Selenium Automation Report");
+
+        spark.config().setDocumentTitle(
+                "Selenium Automation Report"
+        );
+
         spark.config().setReportName(
                 "Test Execution Report - SauceDemo"
         );
@@ -83,7 +93,10 @@ public class ExtentReportListener implements ITestListener, ISuiteListener {
                 result.getMethod().getDescription();
 
         ExtentTest extentTest =
-                extent.createTest(methodName, description);
+                extent.createTest(
+                        methodName,
+                        description
+                );
 
         test.set(extentTest);
     }
@@ -91,9 +104,11 @@ public class ExtentReportListener implements ITestListener, ISuiteListener {
     @Override
     public void onTestSuccess(ITestResult result) {
 
-        ExtentTest extentTest = test.get();
+        ExtentTest extentTest =
+                test.get();
 
         if (extentTest != null) {
+
             extentTest.log(
                     Status.PASS,
                     "Test Passed"
@@ -104,7 +119,8 @@ public class ExtentReportListener implements ITestListener, ISuiteListener {
     @Override
     public void onTestFailure(ITestResult result) {
 
-        ExtentTest extentTest = test.get();
+        ExtentTest extentTest =
+                test.get();
 
         if (extentTest != null) {
 
@@ -113,18 +129,22 @@ public class ExtentReportListener implements ITestListener, ISuiteListener {
                     result.getThrowable()
             );
 
-            String screenshot =
-                    ScreenshotUtils.capture(
-                            DriverManager.getDriver(),
-                            result.getName()
+            if (DriverManager.getDriver() != null) {
+
+                String screenshot =
+                        ScreenshotUtils.capture(
+                                DriverManager.getDriver(),
+                                result.getName()
+                        );
+
+                if (screenshot != null
+                        && !screenshot.isEmpty()) {
+
+                    extentTest.addScreenCaptureFromPath(
+                            screenshot,
+                            "Failure Screenshot"
                     );
-
-            if (screenshot != null && !screenshot.isEmpty()) {
-
-                extentTest.addScreenCaptureFromPath(
-                        screenshot,
-                        "Failure Screenshot"
-                );
+                }
             }
         }
     }
@@ -132,7 +152,8 @@ public class ExtentReportListener implements ITestListener, ISuiteListener {
     @Override
     public void onTestSkipped(ITestResult result) {
 
-        ExtentTest extentTest = test.get();
+        ExtentTest extentTest =
+                test.get();
 
         if (extentTest != null) {
 
