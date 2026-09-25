@@ -2,6 +2,7 @@ package com.automation.utils;
 
 import com.automation.config.ConfigReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,7 +12,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 /**
- * Thread-safe WebDriver factory using ThreadLocal.
+ * WebDriver factory for Selenium tests.
+ *
  * Supports Chrome, Firefox, and Edge.
  *
  * Compatible with Java 11.
@@ -20,23 +22,21 @@ import org.openqa.selenium.firefox.FirefoxOptions;
  */
 public class DriverManager {
 
-    private static final ThreadLocal<WebDriver> driverThread =
-            new ThreadLocal<>();
+    private static WebDriver driver;
 
     private DriverManager() {
         // Prevent object creation
     }
 
     /**
-     * Returns the WebDriver instance for the current thread.
+     * Returns the current WebDriver instance.
      */
     public static WebDriver getDriver() {
-        return driverThread.get();
+        return driver;
     }
 
     /**
-     * Initializes the WebDriver based on the browser
-     * and headless configuration.
+     * Initializes WebDriver based on configuration.
      */
     public static void initDriver() {
 
@@ -46,8 +46,6 @@ public class DriverManager {
 
         boolean headless = ConfigReader.getInstance()
                 .isHeadless();
-
-        WebDriver driver;
 
         switch (browser) {
 
@@ -63,9 +61,7 @@ public class DriverManager {
                 }
 
                 driver = new FirefoxDriver(firefoxOptions);
-
                 break;
-
 
             case "edge":
 
@@ -83,9 +79,7 @@ public class DriverManager {
                 }
 
                 driver = new EdgeDriver(edgeOptions);
-
                 break;
-
 
             case "chrome":
 
@@ -105,23 +99,15 @@ public class DriverManager {
                 }
 
                 driver = new ChromeDriver(chromeOptions);
-
                 break;
         }
 
-        /*
-         * Maximize only when running in normal mode.
-         * In headless mode, use a fixed window size.
-         */
         if (headless) {
 
             driver.manage()
                     .window()
                     .setSize(
-                            new org.openqa.selenium.Dimension(
-                                    1920,
-                                    1080
-                            )
+                            new Dimension(1920, 1080)
                     );
 
         } else {
@@ -130,22 +116,17 @@ public class DriverManager {
                     .window()
                     .maximize();
         }
-
-        driverThread.set(driver);
     }
 
     /**
-     * Quits the WebDriver and removes it from ThreadLocal.
+     * Quits WebDriver and clears the reference.
      */
     public static void quitDriver() {
-
-        WebDriver driver = driverThread.get();
 
         if (driver != null) {
 
             driver.quit();
-
-            driverThread.remove();
+            driver = null;
         }
     }
 }
