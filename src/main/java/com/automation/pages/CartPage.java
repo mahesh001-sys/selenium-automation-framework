@@ -20,7 +20,6 @@ public class CartPage extends BasePage {
     private WebElement checkoutButton;
 
     public String getPageHeader() {
-
         return getText(pageHeader);
     }
 
@@ -42,12 +41,9 @@ public class CartPage extends BasePage {
 
         try {
 
-            WebElement product =
-                    wait.waitForPresence(
-                            productLocator(productName)
-                    );
-
-            return product.isDisplayed();
+            return !driver.findElements(
+                    productLocator(productName)
+            ).isEmpty();
 
         } catch (Exception e) {
 
@@ -67,20 +63,56 @@ public class CartPage extends BasePage {
                         + "']]"
                         + "//button[contains(@id,'remove')]";
 
+        By removeButtonLocator =
+                By.xpath(removeButtonXpath);
+
         WebElement removeButton =
                 wait.waitForClickable(
                         wait.waitForPresence(
-                                By.xpath(removeButtonXpath)
+                                removeButtonLocator
                         )
                 );
 
-        removeButton.click();
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].scrollIntoView({block:'center'});",
+                        removeButton
+                );
 
-        wait.waitForInvisibility(
-                productLocator(productName)
-        );
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].click();",
+                        removeButton
+                );
+
+        waitForProductRemoval(productLocator(productName));
 
         return this;
+    }
+
+    private void waitForProductRemoval(By locator) {
+
+        long endTime =
+                System.currentTimeMillis() + 10000;
+
+        while (System.currentTimeMillis() < endTime) {
+
+            if (driver.findElements(locator).isEmpty()) {
+                return;
+            }
+
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+
+        throw new RuntimeException(
+                "Product was not removed from cart: "
+                        + locator
+        );
     }
 
     public CheckoutPage proceedToCheckout() {
