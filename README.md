@@ -15,9 +15,9 @@ A reusable Selenium automation framework for testing key e-commerce workflows on
 
 ## 🏗️ Framework Architecture
 
-**TestNG → BaseTest → DriverManager → Page Objects → Utilities → Reports**
+**TestNG → BaseTest → ThreadLocal WebDriver → Page Objects → Utilities → Reports**
 
-The framework follows **Page Object Model (POM)** with Page Factory and uses `ThreadLocal<WebDriver>` for thread-safe execution.
+The framework follows the **Page Object Model (POM)** with Page Factory and uses `ThreadLocal<WebDriver>` for thread-safe parallel execution.
 
 ## 🧰 Technology Stack
 
@@ -26,18 +26,20 @@ The framework follows **Page Object Model (POM)** with Page Factory and uses `Th
 | Java 11 | Programming |
 | Selenium 4.18.1 | UI Automation |
 | TestNG 7.9.0 | Test Execution |
-| Maven | Build & Dependencies |
-| Apache POI | Excel Data |
-| ExtentReports | HTML Reporting |
-| Log4j2 | Logging |
-| WebDriverManager | Browser Drivers |
+| Maven | Build & Dependency Management |
+| Apache POI 5.2.5 | Excel Data Handling |
+| ExtentReports 5.1.1 | HTML Reporting |
+| Log4j2 2.23.1 | Logging |
+| WebDriverManager 5.7.0 | Browser Driver Management |
+| Git & GitHub | Version Control |
+| GitHub Actions | CI/CD |
 
 ## ⭐ Key Features
 
 - Page Object Model & Page Factory
-- Chrome, Firefox & Edge
-- Parallel Execution
-- Thread-safe WebDriver
+- Chrome, Firefox & Edge Support
+- ThreadLocal WebDriver
+- Parallel Test Execution
 - Explicit Waits
 - Excel Data-Driven Testing
 - Failure Screenshots
@@ -51,14 +53,17 @@ The framework follows **Page Object Model (POM)** with Page Factory and uses `Th
 | Component | Purpose |
 |---|---|
 | `BaseTest` | Test setup & cleanup |
-| `BasePage` | Common Page functionality |
-| `DriverManager` | WebDriver management |
+| `BasePage` | Common page functionality |
+| `DriverManager` | ThreadLocal WebDriver management |
 | `Page Objects` | UI locators & reusable actions |
 | `Test Classes` | Test scenarios & validations |
-| `Utility Classes` | Waits, Excel, screenshots & configuration |
+| `WaitUtils` | Centralized explicit waits |
+| `ConfigReader` | Configuration management |
+| `ExcelUtils` | Excel test-data handling |
+| `ScreenshotUtils` | Failure screenshot capture |
 | `ExtentReportListener` | Test reporting |
 | `test-data/` | Excel test data |
-| `testng.xml` | Test suite |
+| `testng.xml` | Test suite & parallel execution |
 | `pom.xml` | Maven configuration |
 
 ## 🧪 Test Execution
@@ -67,25 +72,56 @@ The framework follows **Page Object Model (POM)** with Page Factory and uses `Th
 
 **Regression Tests:** Complete functional test suite
 
-**Latest Execution:** 17 Tests | 17 Passed | 0 Failed | BUILD SUCCESS
+**Parallel Execution:** TestNG `parallel="methods"` with `thread-count="2"` using ThreadLocal WebDriver.
+
+**Latest Execution:** 17 Tests | 17 Passed | 0 Failed | 0 Skipped | **BUILD SUCCESS**
 
 **Reports:** ExtentReports HTML report with failure screenshots.
 
 ## 🔄 CI/CD
 
-GitHub Actions is configured for automated Maven test execution with headless Chrome and test artifacts.
+GitHub Actions automates Maven test execution using:
+
+- Java 11
+- Ubuntu
+- Chrome
+- Maven
+- ExtentReports artifact upload
+
+### CI/CD Flow
+
+    Code Push / Pull Request
+              ↓
+         GitHub Actions
+              ↓
+            Java 11
+              ↓
+            Chrome
+              ↓
+         mvn clean test
+              ↓
+         Extent Report
+
+Workflow file:
+
+`.github/workflows/main.yml`
 
 ## ▶️ How to Run
 
+### Clone Repository
+
     git clone https://github.com/mahesh001-sys/selenium-automation-framework.git
     cd selenium-automation-framework
+
+### Run Complete Suite
+
     mvn clean test
 
-### Smoke
+### Smoke Tests
 
     mvn clean test -Dgroups=smoke
 
-### Regression
+### Regression Tests
 
     mvn clean test -Dgroups=regression
 
@@ -97,17 +133,15 @@ GitHub Actions is configured for automated Maven test execution with headless Ch
 
     mvn clean test -Dbrowser=edge
 
+### Headless Execution
+
+    mvn clean test -Dheadless=true
+
 ## 🤖 AI-Assisted Development
 
 AI tools were used as development assistance for understanding concepts, debugging, test-case ideas and documentation.
 
-All generated suggestions were reviewed, adapted and validated through actual framework execution.
-
-## 🎓 Project Outcome
-
-A structured, reusable and CI-ready Selenium automation framework demonstrating:
-
-**Java + Selenium + TestNG + POM + Data-Driven Testing + Parallel Execution + Reporting + CI/CD**
+All suggestions were reviewed, adapted and validated through actual framework execution.
 
 ## 👨‍💻 Author
 
