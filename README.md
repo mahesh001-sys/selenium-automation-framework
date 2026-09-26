@@ -20,12 +20,12 @@ The framework covers the complete user journey from authentication to checkout.
 
 | Area | Automated Scenarios |
 |---|---|
-| 🔐 Authentication | Valid login, invalid login, negative login scenarios |
-| 🏠 Home Page | Product page validation, product visibility, logout |
-| 🛍️ Products | Product selection, sorting, add-to-cart |
+| 🔐 Authentication | Valid login, invalid login and negative login scenarios |
+| 🏠 Home Page | Product page validation, product visibility and navigation |
+| 🛍️ Products | Product selection, sorting and add-to-cart |
 | 🛒 Cart | Cart validation and product verification |
 | 💳 Checkout | Checkout workflow and validation scenarios |
-| 📊 Test Data | Excel-based data-driven login testing |
+| 📊 Test Data | Excel-based data-driven testing |
 
 **Application Under Test:** [SauceDemo](https://www.saucedemo.com/)
 
@@ -33,24 +33,19 @@ The framework covers the complete user journey from authentication to checkout.
 
 ## 🏗️ Framework Design
 
-The framework follows a layered automation design:
+The framework follows a layered automation architecture:
 
-**Test Layer**  
-→ TestNG test cases and assertions
+**Test Layer** → TestNG test cases and assertions
 
-**Page Layer**  
-→ Page Objects containing locators and reusable actions
+**Page Layer** → Page Objects containing locators and reusable actions
 
-**Utility Layer**  
-→ Driver management, waits, Excel handling and screenshots
+**Utility Layer** → Driver management, waits, Excel handling and screenshots
 
-**Reporting Layer**  
-→ ExtentReports and TestNG listener
+**Reporting Layer** → ExtentReports and TestNG listener
 
-**Configuration Layer**  
-→ Browser, URL and execution settings
+**Configuration Layer** → Browser, URL and execution settings
 
-This separation keeps the automation code **reusable, maintainable and easier to scale**.
+This separation keeps the automation code **reusable, maintainable and scalable**.
 
 ---
 
@@ -60,11 +55,11 @@ This separation keeps the automation code **reusable, maintainable and easier to
 |---|---|
 | Java 11 | Automation programming |
 | Selenium WebDriver 4.18.1 | Browser automation |
-| TestNG 7.9.0 | Test execution, assertions and groups |
+| TestNG 7.9.0 | Test execution and assertions |
 | Maven | Build and dependency management |
 | WebDriverManager | Browser driver management |
 | Apache POI | Excel test data |
-| ExtentReports 5.1.1 | HTML reporting |
+| ExtentReports 5.1.1 | HTML test reporting |
 | Commons IO | File and screenshot handling |
 | Git & GitHub | Version control |
 | GitHub Actions | CI/CD automation |
@@ -84,37 +79,29 @@ This separates:
 - Test scenarios
 - Assertions
 
-Result: cleaner and more maintainable test code.
+Result: cleaner, reusable and maintainable test code.
 
 ### ThreadLocal WebDriver
 
 The framework uses `ThreadLocal<WebDriver>` to maintain isolated browser instances during parallel execution.
 
-This allows multiple test methods to execute without sharing the same WebDriver instance.
+This prevents multiple parallel tests from sharing the same WebDriver instance.
 
 ### Parallel Execution
 
 TestNG is configured for method-level parallel execution with two threads.
 
-This demonstrates the framework's ability to execute independent tests concurrently.
+This helps reduce overall execution time for independent test cases.
 
 ### Centralized Explicit Waits
 
-Reusable wait utilities are used instead of hard-coded delays.
-
-The framework supports synchronization such as:
-
-- Element visibility
-- Element clickability
-- Element presence
-- URL validation
-- Page title validation
+Reusable wait utilities are used to improve synchronization and reduce flaky test execution.
 
 ### Data-Driven Testing
 
 Login scenarios use external Excel test data through **Apache POI and TestNG DataProvider**.
 
-Test data is maintained separately from the automation logic.
+Test data is maintained separately from automation logic.
 
 ### Cross-Browser Testing
 
@@ -124,16 +111,16 @@ Supported browsers:
 - Firefox
 - Edge
 
-Browser execution can be configured without changing the test cases.
+Browser execution can be configured without changing test cases.
 
 ### Automatic Failure Screenshots
 
 When a test fails:
 
 1. TestNG listener detects the failure.
-2. ScreenshotUtils captures the browser state.
-3. The screenshot is attached to the Extent Report.
-4. The failure can be investigated directly from the report.
+2. `ScreenshotUtils` captures the browser state.
+3. The screenshot is saved.
+4. The screenshot is attached to the Extent Report.
 
 ---
 
@@ -167,7 +154,7 @@ The framework generates an **ExtentReports HTML report** containing:
 
 **Report:** `reports/ExtentReport.html`
 
-The reporting process is handled automatically through `ExtentReportListener`, so individual test classes do not need to contain reporting code.
+Reporting is handled automatically through `ExtentReportListener`.
 
 ---
 
@@ -175,11 +162,11 @@ The reporting process is handled automatically through `ExtentReportListener`, s
 
 Tests are organized using TestNG groups:
 
-**Smoke**
+### Smoke Tests
 
-Focused on important application functionality.
+Focused on core application functionality.
 
-**Regression**
+### Regression Tests
 
 Covers broader functional and negative scenarios.
 
@@ -191,156 +178,47 @@ The framework also supports parallel method execution through the TestNG suite c
 
 The project is integrated with **GitHub Actions** for automated test execution.
 
-CI pipeline:
+**CI Pipeline:**
 
-**Git Push**  
-→ **Checkout Repository**  
-→ **Setup Java**  
-→ **Setup Browser**  
-→ **Maven Test Execution**  
-→ **Generate Test Report**  
-→ **Publish Test Results**
+Git Push  
+↓  
+Checkout Repository  
+↓  
+Setup Java  
+↓  
+Setup Browser  
+↓  
+Maven Test Execution  
+↓  
+Generate Extent Report  
+↓  
+Publish Test Results
 
-This allows the automation suite to be executed automatically in a CI environment.
+This enables the automation suite to run automatically in a CI environment.
 
 ---
 
 ## 📂 Project Structure
 
 ```text
-src/
-└── main/
-    └── java/
-        └── com.automation/
-            ├── base/
-            ├── config/
-            ├── pages/
-            ├── tests/
-            └── utils/
-
-test-data/
-└── TestData.xlsx
-
-reports/
-└── ExtentReport.html
-
-testng.xml
-pom.xml
-README.md
-## 📌 Important Components
-
-| Component | Responsibility |
-|---|---|
-| `BaseTest` | Test setup and teardown |
-| `DriverManager` | WebDriver lifecycle |
-| `ConfigReader` | Framework configuration |
-| `WaitUtils` | Explicit synchronization |
-| `ExcelUtils` | Excel test data |
-| `ScreenshotUtils` | Failure screenshot capture |
-| `ExtentReportListener` | Test reporting |
-| Page Objects | Application UI interactions |
-| Test Classes | Test scenarios and validations |
-
----
-
-## ▶️ How to Run
-
-### Clone the Repository
-
-`git clone https://github.com/mahesh001-sys/selenium-automation-framework.git`
-
-### Navigate to the Project
-
-`cd selenium-automation-framework`
-
-### Execute All Tests
-
-`mvn clean test`
-
-### Execute Smoke Tests
-
-`mvn clean test -Dgroups=smoke`
-
-### Execute Regression Tests
-
-`mvn clean test -Dgroups=regression`
-
-### Run on Firefox
-
-`mvn clean test -Dbrowser=firefox`
-
-### Run on Edge
-
-`mvn clean test -Dbrowser=edge`
-
----
-
-## 🤖 AI-Assisted Development
-
-AI tools were used as development assistance, not as a replacement for validation.
-
-AI assistance was used for:
-
-- Understanding Java and Selenium concepts
-- Debugging and troubleshooting
-- Improving automation code
-- Identifying test scenarios
-- Framework design discussions
-- Documentation
-- Test case ideas
-- Interview preparation
-
-All relevant suggestions were reviewed and validated by executing the framework and verifying the results.
-
----
-
-## 💡 Engineering Practices Demonstrated
-
-- Object-Oriented Programming
-- Page Object Model
-- Reusable automation components
-- Thread-safe WebDriver management
-- Explicit synchronization
-- Data-driven testing
-- Negative testing
-- Smoke and regression testing
-- Cross-browser automation
-- Parallel execution
-- Failure diagnostics
-- HTML reporting
-- Maven-based execution
-- CI/CD automation
-- Git version control
-- AI-assisted development with human validation
-
----
-
-## 🎓 Project Outcome
-
-This project demonstrates how a Selenium test suite can be transformed into a structured, reusable and CI-ready automation framework rather than a collection of individual Selenium scripts.
-
-The framework brings together:
-
-**Java + Selenium + TestNG + POM + Data-Driven Testing + Parallel Execution + Reporting + CI/CD**
-
-into a single automation solution.
-
----
-
-## 👨‍💻 Author
-
-### Banoth Mahesh Kumar
-
-**B.Tech – Information Technology**
-
-**Aspiring QA Automation Engineer**
-
-Interested in Software Testing, Selenium Automation, Java and Quality Engineering.
-
----
-
-## 🔗 Repository
-
-[View the complete source code on GitHub](https://github.com/mahesh001-sys/selenium-automation-framework)
-
-⭐ If you find this project useful, feel free to explore the repository and review the framework implementation.
+selenium-automation-framework/
+│
+├── src/
+│   └── main/
+│       └── java/
+│           └── com/automation/
+│               ├── base/
+│               ├── config/
+│               ├── pages/
+│               ├── tests/
+│               └── utils/
+│
+├── test-data/
+│   └── TestData.xlsx
+│
+├── reports/
+│   └── ExtentReport.html
+│
+├── testng.xml
+├── pom.xml
+└── README.md
