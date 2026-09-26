@@ -68,16 +68,16 @@ public class CartPage extends BasePage {
                         + "//button[contains(@id,'remove')]";
 
         WebElement removeButton =
-                wait.waitForPresence(
-                        By.xpath(removeButtonXpath)
+                wait.waitForClickable(
+                        wait.waitForPresence(
+                                By.xpath(removeButtonXpath)
+                        )
                 );
 
-        wait.waitForClickable(removeButton).click();
+        removeButton.click();
 
         wait.waitForInvisibility(
-                driver.findElement(
-                        productLocator(productName)
-                )
+                productLocator(productName)
         );
 
         return this;
@@ -85,7 +85,20 @@ public class CartPage extends BasePage {
 
     public CheckoutPage proceedToCheckout() {
 
-        wait.waitForClickable(checkoutButton).click();
+        WebElement button =
+                wait.waitForClickable(checkoutButton);
+
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].scrollIntoView({block:'center'});",
+                        button
+                );
+
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].click();",
+                        button
+                );
 
         wait.waitForUrl("checkout-step-one.html");
 
