@@ -70,7 +70,7 @@ public class CheckoutPage extends BasePage {
         return this;
     }
 
-    public CheckoutOverviewPage clickContinue() {
+    public CheckoutPage clickContinue() {
 
         WebElement button =
                 wait.waitForClickable(continueButton);
@@ -89,7 +89,7 @@ public class CheckoutPage extends BasePage {
 
         wait.waitForUrl("checkout-step-two.html");
 
-        return new CheckoutOverviewPage();
+        return this;
     }
 
     public boolean isErrorDisplayed() {
