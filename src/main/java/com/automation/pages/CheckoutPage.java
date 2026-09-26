@@ -41,29 +41,26 @@ public class CheckoutPage extends BasePage {
         WebElement visibleField =
                 wait.waitForVisible(field);
 
-        visibleField.click();
-        visibleField.clear();
-        visibleField.sendKeys(value);
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "const element = arguments[0];" +
+                        "const value = arguments[1];" +
+                        "const setter = Object.getOwnPropertyDescriptor(" +
+                        "window.HTMLInputElement.prototype, 'value').set;" +
+                        "setter.call(element, value);" +
+                        "element.dispatchEvent(new Event('input', " +
+                        "{ bubbles: true }));" +
+                        "element.dispatchEvent(new Event('change', " +
+                        "{ bubbles: true }));",
+                        visibleField,
+                        value
+                );
 
-        String enteredValue =
-                visibleField.getAttribute("value");
-
-        if (!value.equals(enteredValue)) {
-
-            visibleField.click();
-            visibleField.clear();
-            visibleField.sendKeys(value);
-
-            enteredValue =
-                    visibleField.getAttribute("value");
-        }
-
-        if (!value.equals(enteredValue)) {
-
-            throw new IllegalStateException(
-                    "Unable to enter checkout field value."
-            );
-        }
+        wait.until(d ->
+                value.equals(
+                        visibleField.getAttribute("value")
+                )
+        );
     }
 
 
