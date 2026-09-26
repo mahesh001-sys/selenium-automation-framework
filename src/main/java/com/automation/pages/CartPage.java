@@ -24,8 +24,7 @@ public class CartPage extends BasePage {
         return getText(pageHeader);
     }
 
-    public boolean isProductInCart(
-            String productName) {
+    private By productLocator(String productName) {
 
         String productXpath =
                 "//div[contains(@class,'cart_item')]"
@@ -35,11 +34,17 @@ public class CartPage extends BasePage {
                         + productName
                         + "']]";
 
+        return By.xpath(productXpath);
+    }
+
+    public boolean isProductInCart(
+            String productName) {
+
         try {
 
             WebElement product =
                     wait.waitForPresence(
-                            By.xpath(productXpath)
+                            productLocator(productName)
                     );
 
             return product.isDisplayed();
@@ -68,6 +73,12 @@ public class CartPage extends BasePage {
                 );
 
         wait.waitForClickable(removeButton).click();
+
+        wait.waitForInvisibility(
+                driver.findElement(
+                        productLocator(productName)
+                )
+        );
 
         return this;
     }
