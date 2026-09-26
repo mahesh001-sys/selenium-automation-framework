@@ -25,30 +25,20 @@ public class HomePage extends BasePage {
     @FindBy(className = "shopping_cart_link")
     private WebElement cartLink;
 
-
     public String getPageHeader() {
-
         return getText(pageHeader);
     }
 
-
     public HomePage openMenu() {
-
         click(menuButton);
-
         return this;
     }
 
-
     public LoginPage logout() {
-
         openMenu();
-
         click(logoutLink);
-
         return new LoginPage();
     }
-
 
     public CartPage openCart() {
 
@@ -72,7 +62,6 @@ public class HomePage extends BasePage {
         return new CartPage();
     }
 
-
     public HomePage addProductToCart(
             String productName) {
 
@@ -95,11 +84,26 @@ public class HomePage extends BasePage {
                         )
                 );
 
-        addToCartButton.click();
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].scrollIntoView({block:'center'});",
+                        addToCartButton
+                );
+
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].click();",
+                        addToCartButton
+                );
+
+        // Wait until SauceDemo updates the cart.
+        By cartBadgeLocator =
+                By.cssSelector(".shopping_cart_badge");
+
+        wait.waitForPresence(cartBadgeLocator);
 
         return this;
     }
-
 
     public boolean isProductDisplayed(
             String productName) {
