@@ -5,15 +5,14 @@
 
 <suite name="Selenium Automation Suite"
        verbose="1"
-       parallel="false">
+       parallel="methods"
+       thread-count="2">
 
     <listeners>
         <listener class-name="com.automation.utils.ExtentReportListener"/>
     </listeners>
 
-
     <test name="Smoke Tests">
-
         <groups>
             <run>
                 <include name="smoke"/>
@@ -26,12 +25,9 @@
             <class name="com.automation.tests.ProductTest"/>
             <class name="com.automation.tests.CheckoutTest"/>
         </classes>
-
     </test>
 
-
     <test name="Regression Tests">
-
         <groups>
             <run>
                 <include name="regression"/>
@@ -44,7 +40,6 @@
             <class name="com.automation.tests.ProductTest"/>
             <class name="com.automation.tests.CheckoutTest"/>
         </classes>
-
     </test>
 
 </suite>
