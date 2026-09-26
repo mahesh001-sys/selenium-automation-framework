@@ -11,58 +11,65 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-/**
- * Manages WebDriver creation and cleanup.
- *
- * Supports Chrome, Firefox and Edge.
- * Supports headless execution for CI.
- *
- * Java 11 compatible.
- *
- * @author Banoth Mahesh Kumar
- */
 public class DriverManager {
 
-    private static WebDriver driver;
+    private static final ThreadLocal<WebDriver> driver =
+            new ThreadLocal<>();
 
     private DriverManager() {
         // Prevent object creation
     }
 
     public static WebDriver getDriver() {
-        return driver;
+        return driver.get();
     }
 
     public static void initDriver() {
 
-        if (driver != null) {
+        if (driver.get() != null) {
             return;
         }
 
-        ConfigReader config = ConfigReader.getInstance();
+        ConfigReader config =
+                ConfigReader.getInstance();
 
-        String browser = config.getBrowser().toLowerCase();
-        boolean headless = config.isHeadless();
+        String browser =
+                config.getBrowser().toLowerCase();
+
+        boolean headless =
+                config.isHeadless();
+
+        WebDriver webDriver;
 
         switch (browser) {
 
             case "firefox":
 
-                WebDriverManager.firefoxdriver().setup();
+                WebDriverManager
+                        .firefoxdriver()
+                        .setup();
 
                 FirefoxOptions firefoxOptions =
                         new FirefoxOptions();
 
                 if (headless) {
-                    firefoxOptions.addArguments("--headless");
+                    firefoxOptions.addArguments(
+                            "--headless"
+                    );
                 }
 
-                driver = new FirefoxDriver(firefoxOptions);
+                webDriver =
+                        new FirefoxDriver(
+                                firefoxOptions
+                        );
+
                 break;
 
             case "edge":
 
-                WebDriverManager.edgedriver().setup();
+                WebDriverManager
+                        .edgedriver()
+                        .setup();
 
                 EdgeOptions edgeOptions =
                         new EdgeOptions();
@@ -75,12 +82,18 @@ public class DriverManager {
                     );
                 }
 
-                driver = new EdgeDriver(edgeOptions);
+                webDriver =
+                        new EdgeDriver(
+                                edgeOptions
+                        );
+
                 break;
 
             case "chrome":
 
-                WebDriverManager.chromedriver().setup();
+                WebDriverManager
+                        .chromedriver()
+                        .setup();
 
                 ChromeOptions chromeOptions =
                         new ChromeOptions();
@@ -94,7 +107,11 @@ public class DriverManager {
                     );
                 }
 
-                driver = new ChromeDriver(chromeOptions);
+                webDriver =
+                        new ChromeDriver(
+                                chromeOptions
+                        );
+
                 break;
 
             default:
@@ -106,32 +123,45 @@ public class DriverManager {
 
         if (headless) {
 
-            driver.manage()
+            webDriver.manage()
                     .window()
-                    .setSize(new Dimension(1920, 1080));
+                    .setSize(
+                            new Dimension(
+                                    1920,
+                                    1080
+                            )
+                    );
 
         } else {
 
-            driver.manage()
+            webDriver.manage()
                     .window()
                     .maximize();
         }
 
-        driver.manage()
+        webDriver.manage()
                 .timeouts()
                 .pageLoadTimeout(
                         java.time.Duration.ofSeconds(
                                 config.getPageLoadTimeout()
                         )
                 );
+
+        driver.set(webDriver);
     }
 
     public static void quitDriver() {
 
-        if (driver != null) {
+        WebDriver webDriver =
+                driver.get();
 
-            driver.quit();
-            driver = null;
+        if (webDriver != null) {
+
+            try {
+                webDriver.quit();
+            } finally {
+                driver.remove();
+            }
         }
     }
-                             }
+}
