@@ -30,6 +30,9 @@ public class CheckoutPage extends BasePage {
     @FindBy(className = "complete-header")
     private WebElement confirmationMessage;
 
+    @FindBy(css = "[data-test='error']")
+    private WebElement errorMessage;
+
 
     public CheckoutPage enterFirstName(
             String firstName) {
@@ -75,7 +78,23 @@ public class CheckoutPage extends BasePage {
                         button
                 );
 
-        wait.waitForUrl("checkout-step-two.html");
+        try {
+
+            wait.waitForUrl("checkout-step-two.html");
+
+        } catch (Exception e) {
+
+            if (isDisplayed(errorMessage)) {
+
+                throw new IllegalStateException(
+                        "Checkout validation error: "
+                                + getErrorMessage()
+                );
+
+            }
+
+            throw e;
+        }
 
         return this;
     }
@@ -120,5 +139,17 @@ public class CheckoutPage extends BasePage {
     public String getConfirmationMessage() {
 
         return getText(confirmationMessage);
+    }
+
+
+    public boolean isErrorDisplayed() {
+
+        return isDisplayed(errorMessage);
+    }
+
+
+    public String getErrorMessage() {
+
+        return getText(errorMessage);
     }
 }
