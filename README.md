@@ -227,3 +227,120 @@ reports/
 testng.xml
 pom.xml
 README.md
+## 📌 Important Components
+
+| Component | Responsibility |
+|---|---|
+| `BaseTest` | Test setup and teardown |
+| `DriverManager` | WebDriver lifecycle |
+| `ConfigReader` | Framework configuration |
+| `WaitUtils` | Explicit synchronization |
+| `ExcelUtils` | Excel test data |
+| `ScreenshotUtils` | Failure screenshot capture |
+| `ExtentReportListener` | Test reporting |
+| Page Objects | Application UI interactions |
+| Test Classes | Test scenarios and validations |
+
+---
+
+## ▶️ How to Run
+
+### Clone the Repository
+
+`git clone https://github.com/mahesh001-sys/selenium-automation-framework.git`
+
+### Navigate to the Project
+
+`cd selenium-automation-framework`
+
+### Execute All Tests
+
+`mvn clean test`
+
+### Execute Smoke Tests
+
+`mvn clean test -Dgroups=smoke`
+
+### Execute Regression Tests
+
+`mvn clean test -Dgroups=regression`
+
+### Run on Firefox
+
+`mvn clean test -Dbrowser=firefox`
+
+### Run on Edge
+
+`mvn clean test -Dbrowser=edge`
+
+---
+
+## 🤖 AI-Assisted Development
+
+AI tools were used as development assistance, not as a replacement for validation.
+
+AI assistance was used for:
+
+- Understanding Java and Selenium concepts
+- Debugging and troubleshooting
+- Improving automation code
+- Identifying test scenarios
+- Framework design discussions
+- Documentation
+- Test case ideas
+- Interview preparation
+
+All relevant suggestions were reviewed and validated by executing the framework and verifying the results.
+
+---
+
+## 💡 Engineering Practices Demonstrated
+
+- Object-Oriented Programming
+- Page Object Model
+- Reusable automation components
+- Thread-safe WebDriver management
+- Explicit synchronization
+- Data-driven testing
+- Negative testing
+- Smoke and regression testing
+- Cross-browser automation
+- Parallel execution
+- Failure diagnostics
+- HTML reporting
+- Maven-based execution
+- CI/CD automation
+- Git version control
+- AI-assisted development with human validation
+
+---
+
+## 🎓 Project Outcome
+
+This project demonstrates how a Selenium test suite can be transformed into a structured, reusable and CI-ready automation framework rather than a collection of individual Selenium scripts.
+
+The framework brings together:
+
+**Java + Selenium + TestNG + POM + Data-Driven Testing + Parallel Execution + Reporting + CI/CD**
+
+into a single automation solution.
+
+---
+
+## 👨‍💻 Author
+
+### Banoth Mahesh Kumar
+
+**B.Tech – Information Technology**
+
+**Aspiring QA Automation Engineer**
+
+Interested in Software Testing, Selenium Automation, Java and Quality Engineering.
+
+---
+
+## 🔗 Repository
+
+[View the complete source code on GitHub](https://github.com/mahesh001-sys/selenium-automation-framework)
+
+⭐ If you find this project useful, feel free to explore the repository and review the framework implementation.
