@@ -200,20 +200,25 @@ This enables the automation suite to run automatically in a CI environment.
 
 ## 📂 Project Structure
 
-selenium-automation-framework/
-│
-├── src/main/java/com/automation/
-│   ├── base/        → Test setup & WebDriver management
-│   ├── config/      → Framework configuration
-│   ├── pages/       → Page Object classes
-│   ├── tests/       → Test cases
-│   └── utils/       → Reusable utilities
-│
-├── test-data/       → Excel test data
-├── reports/         → ExtentReports
-├── testng.xml       → TestNG suite configuration
-├── pom.xml          → Maven dependencies
-└── README.md        → Project documentation
+| Directory / File | Purpose |
+|------------------|---------|
+| `base/` | Test setup and WebDriver management |
+| `config/` | Framework configuration |
+| `pages/` | Page Object Model classes |
+| `tests/` | Test cases and validations |
+| `utils/` | Reusable automation utilities |
+| `test-data/` | Excel-based test data |
+| `reports/` | ExtentReports test results |
+| `testng.xml` | Test suite and execution configuration |
+| `pom.xml` | Maven dependencies and build configuration |
+
+### Framework Architecture
+
+**Test Layer** → Test Cases & Validations  
+**Page Layer** → Page Objects & UI Actions  
+**Utility Layer** → Driver, Wait, Excel & Screenshot Utilities  
+**Reporting Layer** → ExtentReports & TestNG Listener  
+**Configuration Layer** → Browser, URL & Execution Settings
 
 
 ## 📌 Important Components
