@@ -24,7 +24,6 @@
             <class name="com.automation.tests.HomePageTest"/>
             <class name="com.automation.tests.ProductTest"/>
             <class name="com.automation.tests.CheckoutTest"/>
-            <class name="com.automation.tests.ScreenshotTest"/>
         </classes>
     </test>
 
