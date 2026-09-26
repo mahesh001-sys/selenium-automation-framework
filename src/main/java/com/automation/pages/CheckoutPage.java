@@ -4,7 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 /**
- * Page Object for SauceDemo Checkout Information page.
+ * Page Object for SauceDemo Checkout page.
  *
  * Java 11 compatible.
  *
@@ -26,6 +26,12 @@ public class CheckoutPage extends BasePage {
 
     @FindBy(id = "continue")
     private WebElement continueButton;
+
+    @FindBy(id = "finish")
+    private WebElement finishButton;
+
+    @FindBy(className = "complete-header")
+    private WebElement confirmationMessage;
 
     @FindBy(css = "[data-test='error']")
     private WebElement errorMessage;
@@ -90,6 +96,40 @@ public class CheckoutPage extends BasePage {
         wait.waitForUrl("checkout-step-two.html");
 
         return this;
+    }
+
+    public CheckoutPage completeCheckout(
+            String firstName,
+            String lastName,
+            String postalCode) {
+
+        enterFirstName(firstName);
+        enterLastName(lastName);
+        enterPostalCode(postalCode);
+        clickContinue();
+
+        WebElement finish =
+                wait.waitForClickable(finishButton);
+
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].scrollIntoView({block:'center'});",
+                        finish
+                );
+
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].click();",
+                        finish
+                );
+
+        wait.waitForUrl("checkout-complete.html");
+
+        return this;
+    }
+
+    public String getConfirmationMessage() {
+        return getText(confirmationMessage);
     }
 
     public boolean isErrorDisplayed() {
