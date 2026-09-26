@@ -2,7 +2,7 @@
 
 ### Java • Selenium • TestNG • Maven • POM
 
-A reusable Selenium automation framework for testing key e-commerce workflows on **SauceDemo**.
+A reusable Selenium automation framework for testing key e-commerce workflows on [SauceDemo](https://www.saucedemo.com).
 
 ## 🎯 What This Project Automates
 
@@ -53,9 +53,9 @@ The framework follows **Page Object Model (POM)** with Page Factory and uses `Th
 | `BaseTest` | Test setup & cleanup |
 | `BasePage` | Common Page functionality |
 | `DriverManager` | WebDriver management |
-| `Page Objects` | UI locators & actions |
-| `Test Classes` | Test scenarios |
-| `Utils` | Waits, Excel & screenshots |
+| `Page Objects` | UI locators & reusable actions |
+| `Test Classes` | Test scenarios & validations |
+| `Utility Classes` | Waits, Excel, screenshots & configuration |
 | `ExtentReportListener` | Test reporting |
 | `test-data/` | Excel test data |
 | `testng.xml` | Test suite |
@@ -68,6 +68,8 @@ The framework follows **Page Object Model (POM)** with Page Factory and uses `Th
 **Regression Tests:** Complete functional test suite
 
 **Latest Execution:** 17 Tests | 17 Passed | 0 Failed | BUILD SUCCESS
+
+**Reports:** ExtentReports HTML report with failure screenshots.
 
 ## 🔄 CI/CD
 
