@@ -60,8 +60,15 @@ public final class ScreenshotUtils {
                                     "_"
                             );
 
+            // Include thread ID to make filenames
+            // unique during parallel execution.
             String fileName =
-                    safeTestName + "_" + timestamp + ".png";
+                    safeTestName
+                            + "_"
+                            + timestamp
+                            + "_thread-"
+                            + Thread.currentThread().getId()
+                            + ".png";
 
             File destination =
                     new File(
