@@ -30,52 +30,79 @@ public class CheckoutPage extends BasePage {
     @FindBy(className = "complete-header")
     private WebElement confirmationMessage;
 
-    public CheckoutPage enterFirstName(String firstName) {
+
+    public CheckoutPage enterFirstName(
+            String firstName) {
 
         type(firstNameField, firstName);
 
         return this;
     }
 
-    public CheckoutPage enterLastName(String lastName) {
+
+    public CheckoutPage enterLastName(
+            String lastName) {
 
         type(lastNameField, lastName);
 
         return this;
     }
 
-    public CheckoutPage enterPostalCode(String postalCode) {
+
+    public CheckoutPage enterPostalCode(
+            String postalCode) {
 
         type(postalCodeField, postalCode);
 
         return this;
     }
 
+
     public CheckoutPage continueCheckout() {
 
-        wait.waitForClickable(continueButton).click();
+        WebElement button =
+                wait.waitForClickable(continueButton);
+
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].scrollIntoView({block:'center'});",
+                        button
+                );
+
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].click();",
+                        button
+                );
 
         wait.waitForUrl("checkout-step-two.html");
 
         return this;
     }
 
+
     public CheckoutPage finishCheckout() {
 
-        WebElement visibleFinishButton =
-                wait.waitForVisible(finishButton);
+        WebElement button =
+                wait.waitForClickable(finishButton);
 
         ((org.openqa.selenium.JavascriptExecutor) driver)
                 .executeScript(
                         "arguments[0].scrollIntoView({block:'center'});",
-                        visibleFinishButton
+                        button
                 );
 
-        wait.waitForClickable(visibleFinishButton)
-                .click();
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].click();",
+                        button
+                );
+
+        wait.waitForUrl("checkout-complete.html");
 
         return this;
     }
+
 
     public CheckoutPage completeCheckout(
             String firstName,
@@ -88,6 +115,7 @@ public class CheckoutPage extends BasePage {
                 .continueCheckout()
                 .finishCheckout();
     }
+
 
     public String getConfirmationMessage() {
 
