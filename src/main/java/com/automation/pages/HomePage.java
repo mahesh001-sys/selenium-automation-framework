@@ -25,31 +25,56 @@ public class HomePage extends BasePage {
     @FindBy(className = "shopping_cart_link")
     private WebElement cartLink;
 
+
     public String getPageHeader() {
+
         return getText(pageHeader);
     }
 
+
     public HomePage openMenu() {
+
         click(menuButton);
+
         return this;
     }
 
+
     public LoginPage logout() {
+
         openMenu();
+
         click(logoutLink);
+
         return new LoginPage();
     }
 
+
     public CartPage openCart() {
 
-        click(cartLink);
+        WebElement cart =
+                wait.waitForClickable(cartLink);
+
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].scrollIntoView({block:'center'});",
+                        cart
+                );
+
+        ((org.openqa.selenium.JavascriptExecutor) driver)
+                .executeScript(
+                        "arguments[0].click();",
+                        cart
+                );
 
         wait.waitForUrl("cart.html");
 
         return new CartPage();
     }
 
-    public HomePage addProductToCart(String productName) {
+
+    public HomePage addProductToCart(
+            String productName) {
 
         String productXpath =
                 "//div[contains(@class,'inventory_item')]"
@@ -74,6 +99,7 @@ public class HomePage extends BasePage {
 
         return this;
     }
+
 
     public boolean isProductDisplayed(
             String productName) {
