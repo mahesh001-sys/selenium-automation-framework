@@ -72,6 +72,14 @@ public class WaitUtils {
         );
     }
 
+    public boolean waitForInvisibility(
+            By locator) {
+
+        return wait.until(
+                ExpectedConditions.invisibilityOfElementLocated(locator)
+        );
+    }
+
     public boolean waitForUrl(String urlFragment) {
 
         return wait.until(
