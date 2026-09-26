@@ -1,6 +1,5 @@
 package com.automation.utils;
 
-import com.automation.driver.DriverManager;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
