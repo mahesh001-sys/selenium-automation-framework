@@ -26,35 +26,30 @@ public class HomePage extends BasePage {
     private WebElement cartLink;
 
     public String getPageHeader() {
-
         return getText(pageHeader);
     }
 
     public HomePage openMenu() {
-
         click(menuButton);
-
         return this;
     }
 
     public LoginPage logout() {
-
         openMenu();
-
         click(logoutLink);
-
         return new LoginPage();
     }
 
     public CartPage openCart() {
 
-        wait.waitForClickable(cartLink).click();
+        click(cartLink);
+
+        wait.waitForUrl("cart.html");
 
         return new CartPage();
     }
 
-    public HomePage addProductToCart(
-            String productName) {
+    public HomePage addProductToCart(String productName) {
 
         String productXpath =
                 "//div[contains(@class,'inventory_item')]"
@@ -65,12 +60,17 @@ public class HomePage extends BasePage {
                         + "']]"
                         + "//button[contains(@id,'add-to-cart')]";
 
+        By addButtonLocator =
+                By.xpath(productXpath);
+
         WebElement addToCartButton =
-                wait.waitForPresence(
-                        By.xpath(productXpath)
+                wait.waitForClickable(
+                        wait.waitForPresence(
+                                addButtonLocator
+                        )
                 );
 
-        wait.waitForClickable(addToCartButton).click();
+        addToCartButton.click();
 
         return this;
     }
@@ -86,12 +86,11 @@ public class HomePage extends BasePage {
 
         try {
 
-            WebElement product =
-                    wait.waitForPresence(
+            return wait.waitForVisible(
+                    driver.findElement(
                             By.xpath(productXpath)
-                    );
-
-            return product.isDisplayed();
+                    )
+            ).isDisplayed();
 
         } catch (Exception e) {
 
