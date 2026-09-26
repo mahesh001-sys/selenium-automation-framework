@@ -50,8 +50,6 @@ public class HomePage extends BasePage {
 
         wait.waitForClickable(cartLink).click();
 
-        wait.waitForUrl("cart.html");
-
         return new CartPage();
     }
 
