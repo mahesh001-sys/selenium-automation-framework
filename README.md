@@ -202,25 +202,19 @@ This enables the automation suite to run automatically in a CI environment.
 
 selenium-automation-framework/
 │
-├── src/
-│   └── main/
-│       └── java/
-│           └── com/automation/
-│               ├── base/
-│               ├── config/
-│               ├── pages/
-│               ├── tests/
-│               └── utils/
+├── src/main/java/com/automation/
+│   ├── base/        → Test setup & WebDriver management
+│   ├── config/      → Framework configuration
+│   ├── pages/       → Page Object classes
+│   ├── tests/       → Test cases
+│   └── utils/       → Reusable utilities
 │
-├── test-data/
-│   └── TestData.xlsx
-│
-├── reports/
-│   └── ExtentReport.html
-│
-├── testng.xml
-├── pom.xml
-└── README.md
+├── test-data/       → Excel test data
+├── reports/         → ExtentReports
+├── testng.xml       → TestNG suite configuration
+├── pom.xml          → Maven dependencies
+└── README.md        → Project documentation
+
 
 ## 📌 Important Components
 
