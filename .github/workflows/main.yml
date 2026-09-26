@@ -29,3 +29,11 @@ jobs:
 
       - name: Run Maven tests
         run: mvn clean test
+
+      - name: Upload Extent Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extent-report
+          path: reports/
+          if-no-files-found: warn
