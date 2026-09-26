@@ -51,11 +51,14 @@ public final class ScreenshotUtils {
                             "yyyyMMdd_HHmmss"
                     ).format(new Date());
 
+            // Handle null or empty test name safely
             String safeTestName =
-                    testName.replaceAll(
-                            "[^a-zA-Z0-9._-]",
-                            "_"
-                    );
+                    (testName == null || testName.trim().isEmpty())
+                            ? "screenshot"
+                            : testName.replaceAll(
+                                    "[^a-zA-Z0-9._-]",
+                                    "_"
+                            );
 
             String fileName =
                     safeTestName + "_" + timestamp + ".png";
