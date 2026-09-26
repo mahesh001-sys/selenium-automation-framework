@@ -34,10 +34,46 @@ public class CheckoutPage extends BasePage {
     private WebElement errorMessage;
 
 
+    private void enterCheckoutField(
+            WebElement field,
+            String value) {
+
+        WebElement visibleField =
+                wait.waitForVisible(field);
+
+        visibleField.click();
+        visibleField.clear();
+        visibleField.sendKeys(value);
+
+        String enteredValue =
+                visibleField.getAttribute("value");
+
+        if (!value.equals(enteredValue)) {
+
+            visibleField.click();
+            visibleField.clear();
+            visibleField.sendKeys(value);
+
+            enteredValue =
+                    visibleField.getAttribute("value");
+        }
+
+        if (!value.equals(enteredValue)) {
+
+            throw new IllegalStateException(
+                    "Unable to enter checkout field value."
+            );
+        }
+    }
+
+
     public CheckoutPage enterFirstName(
             String firstName) {
 
-        type(firstNameField, firstName);
+        enterCheckoutField(
+                firstNameField,
+                firstName
+        );
 
         return this;
     }
@@ -46,7 +82,10 @@ public class CheckoutPage extends BasePage {
     public CheckoutPage enterLastName(
             String lastName) {
 
-        type(lastNameField, lastName);
+        enterCheckoutField(
+                lastNameField,
+                lastName
+        );
 
         return this;
     }
@@ -55,7 +94,10 @@ public class CheckoutPage extends BasePage {
     public CheckoutPage enterPostalCode(
             String postalCode) {
 
-        type(postalCodeField, postalCode);
+        enterCheckoutField(
+                postalCodeField,
+                postalCode
+        );
 
         return this;
     }
@@ -90,7 +132,6 @@ public class CheckoutPage extends BasePage {
                         "Checkout validation error: "
                                 + getErrorMessage()
                 );
-
             }
 
             throw e;
