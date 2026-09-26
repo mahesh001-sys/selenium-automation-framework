@@ -10,7 +10,6 @@
 
     <listeners>
         <listener class-name="com.automation.utils.ExtentReportListener"/>
-        <listener class-name="com.automation.utils.TestListener"/>
     </listeners>
 
     <test name="Smoke Tests">
